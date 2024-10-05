@@ -1,0 +1,8 @@
+[package]
+name = "graphics-adapter-vulkan"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+engine = { path = "../engine" }
+vulkanalia = { version = "=0.16.0", features = ["libloading", "window"] }

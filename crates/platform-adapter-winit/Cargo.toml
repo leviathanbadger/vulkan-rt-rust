@@ -1,0 +1,8 @@
+[package]
+name = "platform-adapter-winit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+engine = { path = "../engine" }
+winit = "0.24"

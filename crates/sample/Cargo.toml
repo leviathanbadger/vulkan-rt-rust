@@ -1,0 +1,9 @@
+[package]
+name = "sample"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+engine = { path = "../engine" }
+graphics-adapter-vulkan = { path = "../graphics-adapter-vulkan" }
+platform-adapter-winit = { path = "../platform-adapter-winit" }
