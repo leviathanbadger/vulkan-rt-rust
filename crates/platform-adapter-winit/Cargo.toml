@@ -4,5 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-engine = { path = "../engine" }
+anyhow = "1"
+log = "0.4.22"
+raw-window-handle = "0.3.4"
 winit = "0.24"
+
+engine = { path = "../engine" }

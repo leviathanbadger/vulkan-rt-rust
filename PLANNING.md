@@ -6,6 +6,7 @@
 
 Provides interface abstractions for:
 
+  - Configuration
   - Scenes
   - Game objects
   - Game update loop (update tick, fixed tick, physics & collision, etc.)

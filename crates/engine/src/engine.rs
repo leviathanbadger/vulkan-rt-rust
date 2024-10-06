@@ -1,16 +1,31 @@
 use std::fmt::Debug;
+use std::sync::atomic::AtomicBool;
+use std::sync::Arc;
 
-use log::info;
 use anyhow::*;
 use crate::graphics_adapter::GraphicsAdapter;
 use crate::platform_adapter::PlatformAdapter;
 
 #[derive(Debug)]
 pub struct Engine {
-    #[allow(dead_code)]
     platform: Box<dyn PlatformAdapter>,
-    #[allow(dead_code)]
-    graphics: Box<dyn GraphicsAdapter>
+    graphics: Box<dyn GraphicsAdapter>,
+    shutdown_requested: Arc<AtomicBool>
+}
+
+impl Engine {
+    pub fn create_shutdown_requested(&self) -> Arc<AtomicBool> {
+        self.shutdown_requested.clone()
+    }
+
+    pub fn start(&mut self) -> Result<()> {
+        self.platform.initialize()?;
+        self.graphics.initialize(&self.platform)?;
+
+        self.platform.run_event_loop(self.create_shutdown_requested())?;
+
+        Ok(())
+    }
 }
 
 pub fn build_engine(platform: impl PlatformAdapter + 'static, graphics: impl GraphicsAdapter + 'static) -> Result<Engine> {
@@ -25,7 +40,8 @@ pub fn build_engine(platform: impl PlatformAdapter + 'static, graphics: impl Gra
 
     Ok(Engine {
         platform,
-        graphics
+        graphics,
+        shutdown_requested: Arc::new(AtomicBool::new(false))
     })
 }
 
